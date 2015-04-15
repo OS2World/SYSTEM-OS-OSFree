@@ -1,1 +1,0 @@
-for %%i in (*.h) do h2pas %%i -d -l cmd_shared

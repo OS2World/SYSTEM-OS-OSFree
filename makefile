@@ -1,32 +1,18 @@
-# $Id: makefile,v 1.2 2002/07/06 20:22:11 andrew Exp $
 #
-# Root makefile for whatever may reside in subdirectories. Don't invoke the
-# compiler directly from this file!
+# A main Makefile for OS/3 boot sequence project
+# (c) osFree project.
+# valerius, 2006/10/30
 #
-# wmake config	-> compile and install the build tools
-# wmake [all]	-> build the project-related source code
-# wmake install	-> create a distribution tree
 
-ROOT=.
-UNCONFIGURED=1
-!include makefile.inc
+# TOOLS target comes first because all of them required for build process
+# DOS target comes first because many dos executables will be joined with
+# some of os/2 executables as dos stubs
+#
+DIRS = bootseq DOS OS2
 
-all
- cd src\cmd
- $(MAKE) $(MAKEFLAGS)
+!include $(%ROOT)/mk/all.mk
 
-config
- %create config.inc
-!ifdef LIBCPATH
- %append config.inc LIBC=1
- %append config.inc LIBCPATH=$(LIBCPATH)
-!endif
- cd src\toolkit
- $(MAKE) $(MAKEFLAGS)
- cd ..\shared
- $(MAKE) $(MAKEFLAGS)
- cd ..\cmd\shared
- $(MAKE) $(MAKEFLAGS)
+TARGETS = subdirs
+TARGET = all
 
-install
- @echo [No binary distribution yet]
+
